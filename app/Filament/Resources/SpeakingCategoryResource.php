@@ -2,14 +2,13 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\SpeakingPart;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Enums\SpeakingPart;
 use App\Models\SpeakingCategory;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SpeakingCategoryResource\Pages;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -74,7 +73,6 @@ class SpeakingCategoryResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultGroup('part')
             ->reorderable('order');
     }
     

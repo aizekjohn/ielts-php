@@ -2,42 +2,39 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\SpeakingQuestionResource\Pages;
+use App\Filament\Resources\SpeakingQuestionResource\RelationManagers;
+use App\Models\SpeakingQuestion;
 use Filament\Forms;
-use Filament\Tables;
 use Filament\Forms\Form;
-use Filament\Tables\Table;
-use App\Models\WritingCategory;
 use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\WritingCategoryResource\Pages;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use App\Filament\Resources\WritingCategoryResource\RelationManagers;
 
-class WritingCategoryResource extends Resource
+class SpeakingQuestionResource extends Resource
 {
-    protected static ?string $model = WritingCategory::class;
+    protected static ?string $model = SpeakingQuestion::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-queue-list';
+    protected static ?string $navigationIcon = 'heroicon-o-question-mark-circle';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->imageEditor()
-                    ->directory('images')
-                    ->getUploadedFileNameForStorageUsing(
-                        fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
-                            ->prepend(config('constants.file-prefix')),
-                    )
+                Forms\Components\Select::make('speaking_category_id')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required(),
+                Forms\Components\Textarea::make('body')
+                    ->label('Question')
+                    ->required()
+                    ->rows(5)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -45,9 +42,16 @@ class WritingCategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('category.name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('category.part')
+                    ->label('Part')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('body')
+                    ->label('Question')
+                    ->limit(50)
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -69,14 +73,13 @@ class WritingCategoryResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])
-            ->reorderable('order');;
+            ]);
     }
     
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageWritingCategories::route('/'),
+            'index' => Pages\ManageSpeakingQuestions::route('/'),
         ];
     }    
 }

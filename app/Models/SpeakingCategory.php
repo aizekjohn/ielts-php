@@ -20,4 +20,9 @@ class SpeakingCategory extends Model
     protected $casts = [
         'part' => SpeakingPart::class,
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(SpeakingQuestion::class, 'speaking_category_id');
+    }
 }
