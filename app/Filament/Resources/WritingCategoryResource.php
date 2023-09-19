@@ -2,26 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Enums\SpeakingPart;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-use App\Models\SpeakingCategory;
+use App\Models\WritingCategory;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\SpeakingCategoryResource\Pages;
+use App\Filament\Resources\WritingCategoryResource\Pages;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use App\Filament\Resources\SpeakingCategoryResource\RelationManagers;
+use App\Filament\Resources\WritingCategoryResource\RelationManagers;
 
-class SpeakingCategoryResource extends Resource
+class WritingCategoryResource extends Resource
 {
-    protected static ?string $model = SpeakingCategory::class;
+    protected static ?string $model = WritingCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -38,9 +37,6 @@ class SpeakingCategoryResource extends Resource
                         fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
                             ->prepend(config('constants.file-prefix')),
                     )
-                    ->required(),
-                Forms\Components\Select::make('part')
-                    ->options(SpeakingPart::class)
                     ->required(),
             ]);
     }
@@ -74,14 +70,13 @@ class SpeakingCategoryResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultGroup('part')
-            ->reorderable('order');
+            ->reorderable('order');;
     }
     
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageSpeakingCategories::route('/'),
+            'index' => Pages\ManageWritingCategories::route('/'),
         ];
     }    
 }
