@@ -2,22 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use App\Enums\UserGender;
+use App\Enums\UserStatus;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Resource;
+use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\UserResource\RelationManagers;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -36,10 +39,12 @@ class UserResource extends Resource
                 Forms\Components\DateTimePicker::make('phone_verified_at'),
                 Forms\Components\TextInput::make('otp_code')
                     ->numeric(),
-                Forms\Components\TextInput::make('status')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('gender')
-                    ->maxLength(255),
+                Forms\Components\Select::make('status')
+                    ->options(UserStatus::class)
+                    ->required(),
+                Forms\Components\Select::make('gender')
+                    ->options(UserGender::class)
+                    ->required(),
                 Forms\Components\DatePicker::make('date_of_birth'),
                 Forms\Components\TextInput::make('password')
                     ->password()
@@ -91,4 +96,9 @@ class UserResource extends Resource
             'index' => Pages\ManageUsers::route('/'),
         ];
     }    
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }
