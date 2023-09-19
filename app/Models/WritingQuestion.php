@@ -5,18 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WritingCategory extends Model
+class WritingQuestion extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'image',
-        'order',
+        'writing_category_id',
+        'body',
     ];
 
-    public function questions()
+    public function category()
     {
-        return $this->hasMany(WritingQuestion::class, 'writing_category_id');
+        return $this->belongsTo(WritingCategory::class, 'writing_category_id');
     }
 }
