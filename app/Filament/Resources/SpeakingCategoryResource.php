@@ -73,7 +73,8 @@ class SpeakingCategoryResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->reorderable('order');
+            ->reorderable('order')
+            ->defaultSort('order');
     }
     
     public static function getPages(): array

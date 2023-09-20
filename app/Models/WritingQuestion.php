@@ -12,6 +12,7 @@ class WritingQuestion extends Model
     protected $fillable = [
         'writing_category_id',
         'body',
+        'order',
     ];
 
     public function category()

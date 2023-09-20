@@ -12,6 +12,7 @@ class SpeakingQuestion extends Model
     protected $fillable = [
         'speaking_category_id',
         'body',
+        'order',
     ];
 
     public function category()
