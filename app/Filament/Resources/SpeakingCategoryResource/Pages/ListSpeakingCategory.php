@@ -3,12 +3,12 @@
 namespace App\Filament\Resources\SpeakingCategoryResource\Pages;
 
 use Filament\Actions;
+use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Resources\Pages\ManageRecords;
 use Filament\Resources\Pages\ListRecords\Tab;
 use App\Filament\Resources\SpeakingCategoryResource;
 
-class ManageSpeakingCategories extends ManageRecords
+class ListSpeakingCategory extends ListRecords
 {
     protected static string $resource = SpeakingCategoryResource::class;
 

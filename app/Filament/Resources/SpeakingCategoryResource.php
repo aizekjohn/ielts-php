@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SpeakingCategoryResource\Pages;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use App\Filament\Resources\SpeakingCategoryResource\RelationManagers;
+use Illuminate\Database\Eloquent\Model;
 
 class SpeakingCategoryResource extends Resource
 {
@@ -80,7 +81,19 @@ class SpeakingCategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageSpeakingCategories::route('/'),
+            'index' => Pages\ListSpeakingCategory::route('/'),
+            'create' => Pages\CreateSpeakingCategory::route('/create'),
+            'edit' => Pages\EditSpeakingCategory::route('/{record}/edit'),
         ];
     }    
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->name;
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
 }
