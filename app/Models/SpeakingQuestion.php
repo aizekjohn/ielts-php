@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WritingCategory extends Model
+class SpeakingQuestion extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'image',
+        'speaking_category_id',
+        'body',
         'order',
     ];
 
-    public function questions()
+    public function category()
     {
-        return $this->hasMany(WritingQuestion::class, 'writing_category_id');
+        return $this->belongsTo(SpeakingCategory::class, 'speaking_category_id');
     }
 }

@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\WritingCategory;
 use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\WritingCategoryResource\Pages;
@@ -20,7 +21,7 @@ class WritingCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -70,13 +71,26 @@ class WritingCategoryResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ])
-            ->reorderable('order');;
+            ->reorderable('order')
+            ->defaultSort('order');
     }
     
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageWritingCategories::route('/'),
+            'index' => Pages\ListWritingCategory::route('/'),
+            'create' => Pages\CreateWritingCategory::route('/create'),
+            'edit' => Pages\EditWritingCategory::route('/{record}/edit'),
         ];
-    }    
+    } 
+    
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->name;
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name'];
+    }
 }

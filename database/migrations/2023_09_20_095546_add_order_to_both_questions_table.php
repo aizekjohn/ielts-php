@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('speaking_categories', function (Blueprint $table) {
+        Schema::table('speaking_questions', function (Blueprint $table) {
             $table->unsignedSmallInteger('order')->default(999);
         });
 
-        Schema::table('writing_categories', function (Blueprint $table) {
+        Schema::table('writing_questions', function (Blueprint $table) {
             $table->unsignedSmallInteger('order')->default(999);
         });
     }
@@ -25,11 +25,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('speaking_categories', function (Blueprint $table) {
+        Schema::table('speaking_questions', function (Blueprint $table) {
             $table->dropColumn('order');
         });
 
-        Schema::table('writing_categories', function (Blueprint $table) {
+        Schema::table('writing_questions', function (Blueprint $table) {
             $table->dropColumn('order');
         });
     }

@@ -4,16 +4,16 @@ namespace App\Filament\Resources\SpeakingCategoryResource\Pages;
 
 use App\Filament\Resources\SpeakingCategoryResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\EditRecord;
 
-class ManageSpeakingCategories extends ManageRecords
+class EditSpeakingCategory extends EditRecord
 {
     protected static string $resource = SpeakingCategoryResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\DeleteAction::make(),
         ];
     }
 }

@@ -4,16 +4,16 @@ namespace App\Filament\Resources\WritingCategoryResource\Pages;
 
 use App\Filament\Resources\WritingCategoryResource;
 use Filament\Actions;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\EditRecord;
 
-class ManageWritingCategories extends ManageRecords
+class EditWritingCategory extends EditRecord
 {
     protected static string $resource = WritingCategoryResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\DeleteAction::make(),
         ];
     }
 }
