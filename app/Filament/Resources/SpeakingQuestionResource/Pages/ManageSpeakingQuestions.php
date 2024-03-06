@@ -5,7 +5,7 @@ namespace App\Filament\Resources\SpeakingQuestionResource\Pages;
 use Filament\Actions;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\ManageRecords;
-use Filament\Resources\Pages\ListRecords\Tab;
+use Filament\Resources\Components\Tab;
 use App\Filament\Resources\SpeakingQuestionResource;
 
 class ManageSpeakingQuestions extends ManageRecords
@@ -35,5 +35,10 @@ class ManageSpeakingQuestions extends ManageRecords
                     $category->where('part', 3);
                 })),
         ];
+    }
+
+    public function getDefaultActiveTab(): string | int | null
+    {
+        return 'part1';
     }
 }

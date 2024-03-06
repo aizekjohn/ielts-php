@@ -20,9 +20,9 @@ class CreateAdminsSeeder extends Seeder
             'email' => 'baxodirov0609@gmail.com'
         ], [
             'name' => 'Akmal',
-            'phone' => '998882019909',
+            'phone' => '+998882019909',
             'phone_verified_at' => '15.09.2023 17:13',
-            'status' => UserStatus::Active,
+            'status' => UserStatus::ACTIVE,
             'gender' => UserGender::MALE,
             'date_of_birth' => '09.06.1999',
             'password' => Hash::make('MyPass01'),
@@ -32,9 +32,9 @@ class CreateAdminsSeeder extends Seeder
             'email' => 'aizekjon@gmail.com'
         ], [
             'name' => 'Aizek',
-            'phone' => '998995051704',
+            'phone' => '+998995051704',
             'phone_verified_at' => '15.09.2023 17:13',
-            'status' => UserStatus::Active,
+            'status' => UserStatus::ACTIVE,
             'gender' => UserGender::MALE,
             'date_of_birth' => '17.04.1999',
             'password' => Hash::make('MyPass01'),

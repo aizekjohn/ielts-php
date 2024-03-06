@@ -33,7 +33,12 @@ class SpeakingCategoryResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->imageEditor()
-                    ->directory('images')
+                    ->imageEditorAspectRatios([
+                        '16:9',
+                        '4:3',
+                        '1:1',
+                    ])
+                    ->directory('images/speaking-categories')
                     ->getUploadedFileNameForStorageUsing(
                         fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
                             ->prepend(config('constants.file-prefix')),
@@ -77,7 +82,7 @@ class SpeakingCategoryResource extends Resource
             ->reorderable('order')
             ->defaultSort('order');
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -85,7 +90,7 @@ class SpeakingCategoryResource extends Resource
             'create' => Pages\CreateSpeakingCategory::route('/create'),
             'edit' => Pages\EditSpeakingCategory::route('/{record}/edit'),
         ];
-    }    
+    }
 
     public static function getGlobalSearchResultTitle(Model $record): string
     {

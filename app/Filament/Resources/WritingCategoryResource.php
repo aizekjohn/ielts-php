@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\WritingPart;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -33,11 +34,19 @@ class WritingCategoryResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->imageEditor()
-                    ->directory('images')
+                    ->imageEditorAspectRatios([
+                        '16:9',
+                        '4:3',
+                        '1:1',
+                    ])
+                    ->directory('images/writing-categories')
                     ->getUploadedFileNameForStorageUsing(
                         fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
                             ->prepend(config('constants.file-prefix')),
                     )
+                    ->required(),
+                Forms\Components\Select::make('part')
+                    ->options(WritingPart::class)
                     ->required(),
             ]);
     }
@@ -74,7 +83,7 @@ class WritingCategoryResource extends Resource
             ->reorderable('order')
             ->defaultSort('order');
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -82,8 +91,8 @@ class WritingCategoryResource extends Resource
             'create' => Pages\CreateWritingCategory::route('/create'),
             'edit' => Pages\EditWritingCategory::route('/{record}/edit'),
         ];
-    } 
-    
+    }
+
     public static function getGlobalSearchResultTitle(Model $record): string
     {
         return $record->name;

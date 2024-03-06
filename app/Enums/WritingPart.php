@@ -4,17 +4,15 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum UserStatus:string implements HasLabel {
-    case ACTIVE = 'active';
-    case WAITING = 'waiting';
-    case BLOCKED = 'blocked';
+enum WritingPart:string implements HasLabel {
+    case PART1 = '1';
+    case PART2 = '2';
 
     public static function all(): array
     {
         return [
-            self::ACTIVE->value,
-            self::WAITING->value,
-            self::BLOCKED->value,
+            self::PART1->value,
+            self::PART2->value,
         ];
     }
 
