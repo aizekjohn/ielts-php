@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WritingQuestionResource\Pages;
+use App\Filament\Resources\WritingQuestionResource\RelationManagers;
 use App\Models\WritingQuestion;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -46,6 +47,10 @@ class WritingQuestionResource extends Resource
                     ->label('Question')
                     ->limit(50)
                     ->searchable(),
+                Tables\Columns\ImageColumn::make('files.path')
+                    ->label('Images')
+                    ->circular()
+                    ->stacked(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -70,6 +75,13 @@ class WritingQuestionResource extends Resource
             ])
             ->reorderable('order')
             ->defaultSort('order');
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\FilesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
