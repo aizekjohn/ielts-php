@@ -2,13 +2,13 @@
 
 namespace App\Filament\Resources\SpeakingQuestionResource\Pages;
 
-use Filament\Actions;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Resources\Pages\ManageRecords;
-use Filament\Resources\Components\Tab;
 use App\Filament\Resources\SpeakingQuestionResource;
+use Filament\Actions;
+use Filament\Resources\Components\Tab;
+use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\Builder;
 
-class ManageSpeakingQuestions extends ManageRecords
+class ListSpeakingQuestions extends ListRecords
 {
     protected static string $resource = SpeakingQuestionResource::class;
 

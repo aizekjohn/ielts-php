@@ -2,16 +2,13 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SpeakingQuestionResource\Pages;
-use App\Filament\Resources\SpeakingQuestionResource\RelationManagers;
 use App\Models\SpeakingQuestion;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\SpeakingQuestionResource\Pages;
 
 class SpeakingQuestionResource extends Resource
 {
@@ -81,7 +78,9 @@ class SpeakingQuestionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageSpeakingQuestions::route('/'),
+            'index' => Pages\ListSpeakingQuestions::route('/'),
+            'create' => Pages\CreateSpeakingQuestion::route('/create'),
+            'edit' => Pages\EditSpeakingQuestion::route('/{record}/edit'),
         ];
     }
 
