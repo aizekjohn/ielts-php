@@ -10,11 +10,8 @@ use Filament\Tables\Table;
 use App\Models\WritingCategory;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\WritingCategoryResource\Pages;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use App\Filament\Resources\WritingCategoryResource\RelationManagers;
 
 class WritingCategoryResource extends Resource
 {

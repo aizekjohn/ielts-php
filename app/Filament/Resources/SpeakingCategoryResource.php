@@ -9,10 +9,8 @@ use Filament\Tables\Table;
 use App\Enums\SpeakingPart;
 use App\Models\SpeakingCategory;
 use Filament\Resources\Resource;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SpeakingCategoryResource\Pages;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
-use App\Filament\Resources\SpeakingCategoryResource\RelationManagers;
 use Illuminate\Database\Eloquent\Model;
 
 class SpeakingCategoryResource extends Resource
