@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class WritingQuestionResource extends Resource
 {
@@ -96,5 +97,15 @@ class WritingQuestionResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
+    }
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->body;
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['body'];
     }
 }

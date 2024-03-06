@@ -9,6 +9,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use App\Filament\Resources\SpeakingQuestionResource\Pages;
+use Illuminate\Database\Eloquent\Model;
 
 class SpeakingQuestionResource extends Resource
 {
@@ -87,5 +88,15 @@ class SpeakingQuestionResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
+    }
+
+    public static function getGlobalSearchResultTitle(Model $record): string
+    {
+        return $record->body;
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['body'];
     }
 }
