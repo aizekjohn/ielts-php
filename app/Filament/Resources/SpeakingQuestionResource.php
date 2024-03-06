@@ -5,12 +5,12 @@ namespace App\Filament\Resources;
 use App\Helpers\TableHelper;
 use App\Models\SpeakingQuestion;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use App\Filament\Resources\SpeakingQuestionResource\Pages;
+use App\Filament\Resources\SpeakingQuestionResource\RelationManagers;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -47,17 +47,17 @@ class SpeakingQuestionResource extends Resource
                 Tables\Columns\TextColumn::make('category.name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('category.part')
-                    ->label('Part')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('body')
                     ->label('Question')
                     ->limit(50)
                     ->searchable(),
+                Tables\Columns\TextColumn::make('answers_count')
+                    ->counts('answers')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -89,6 +89,13 @@ class SpeakingQuestionResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\AnswersRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

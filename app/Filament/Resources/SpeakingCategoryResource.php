@@ -5,10 +5,8 @@ namespace App\Filament\Resources;
 use App\Helpers\TableHelper;
 use Carbon\Carbon;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
 use Filament\Forms\Form;
-use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Table;
 use App\Enums\SpeakingPart;
 use App\Models\SpeakingCategory;
@@ -59,13 +57,16 @@ class SpeakingCategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('questions_count')->counts('questions'),
+                Tables\Columns\TextColumn::make('questions_count')
+                    ->counts('questions')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
