@@ -3,9 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Enums\WritingPart;
+use App\Helpers\TableHelper;
+use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
 use Filament\Forms\Form;
+use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Table;
 use App\Models\WritingCategory;
 use Filament\Resources\Resource;
@@ -68,6 +72,7 @@ class WritingCategoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                TableHelper::filterCreatedAt(),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

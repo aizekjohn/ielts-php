@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\WritingQuestionResource\Pages;
 use App\Filament\Resources\WritingQuestionResource\RelationManagers;
+use App\Helpers\TableHelper;
 use App\Models\WritingQuestion;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -64,6 +66,7 @@ class WritingQuestionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                TableHelper::filterCreatedAt(),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

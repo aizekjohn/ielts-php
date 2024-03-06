@@ -2,14 +2,17 @@
 
 namespace App\Filament\Resources;
 
+use App\Helpers\TableHelper;
 use Filament\Forms;
 use App\Models\User;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables;
 use Filament\Forms\Form;
 use App\Enums\UserGender;
 use App\Enums\UserStatus;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\UserResource\Pages;
@@ -76,7 +79,7 @@ class UserResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                TableHelper::filterCreatedAt(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
