@@ -55,6 +55,7 @@ class WritingCategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('questions_count')->counts('questions'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -88,6 +89,11 @@ class WritingCategoryResource extends Resource
             'create' => Pages\CreateWritingCategory::route('/create'),
             'edit' => Pages\EditWritingCategory::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 
     public static function getGlobalSearchResultTitle(Model $record): string

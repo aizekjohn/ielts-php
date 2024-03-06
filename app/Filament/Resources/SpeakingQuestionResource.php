@@ -77,11 +77,16 @@ class SpeakingQuestionResource extends Resource
             ->reorderable('order')
             ->defaultSort('order');
     }
-    
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ManageSpeakingQuestions::route('/'),
         ];
-    }    
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 }
