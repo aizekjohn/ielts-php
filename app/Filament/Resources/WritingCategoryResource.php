@@ -11,7 +11,9 @@ use App\Models\WritingCategory;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\WritingCategoryResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Illuminate\Database\Eloquent\Builder;
 
 class WritingCategoryResource extends Resource
 {
@@ -38,7 +40,7 @@ class WritingCategoryResource extends Resource
                     ])
                     ->directory('images/writing-categories')
                     ->getUploadedFileNameForStorageUsing(
-                        fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
+                        fn(TemporaryUploadedFile $file): string => (string)str($file->getClientOriginalName())
                             ->prepend(config('constants.file-prefix')),
                     )
                     ->required(),
@@ -66,20 +68,30 @@ class WritingCategoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ])
             ->reorderable('order')
             ->defaultSort('order');
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 
     public static function getPages(): array
