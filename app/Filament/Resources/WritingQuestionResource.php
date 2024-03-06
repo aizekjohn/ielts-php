@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WritingQuestionResource\Pages;
-use App\Filament\Resources\WritingQuestionResource\RelationManagers;
 use App\Models\WritingQuestion;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WritingQuestionResource extends Resource
 {
@@ -78,7 +75,9 @@ class WritingQuestionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageWritingQuestions::route('/'),
+            'index' => Pages\ListWritingQuestions::route('/'),
+            'create' => Pages\CreateWritingQuestion::route('/create'),
+            'edit' => Pages\EditWritingQuestion::route('/{record}/edit'),
         ];
     }
 

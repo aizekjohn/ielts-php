@@ -5,10 +5,10 @@ namespace App\Filament\Resources\WritingQuestionResource\Pages;
 use App\Filament\Resources\WritingQuestionResource;
 use Filament\Actions;
 use Filament\Resources\Components\Tab;
-use Filament\Resources\Pages\ManageRecords;
+use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 
-class ManageWritingQuestions extends ManageRecords
+class ListWritingQuestions extends ListRecords
 {
     protected static string $resource = WritingQuestionResource::class;
 
