@@ -33,7 +33,7 @@ class AnswersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('band'),
+//                Tables\Columns\TextColumn::make('band'),
                 Tables\Columns\TextColumn::make('body')
                     ->label('Answer')
                     ->limit(50),
@@ -54,6 +54,7 @@ class AnswersRelationManager extends RelationManager
                 ]),
             ])
             ->reorderable('order')
-            ->defaultSort('order');
+            ->defaultSort('order')
+            ->defaultGroup('band');
     }
 }
