@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\SpeakingQuestionResource\RelationManagers;
+namespace App\Filament\Resources\WritingQuestionResource\RelationManagers;
 
 use App\Enums\BandScore;
 use Filament\Forms;
@@ -8,8 +8,6 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AnswersRelationManager extends RelationManager
 {
