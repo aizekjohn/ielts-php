@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Helpers\TableHelper;
+use Exception;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
@@ -27,6 +28,9 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('avatar')
+                    ->avatar()
+                    ->disabled(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -37,9 +41,11 @@ class UserResource extends Resource
                     ->tel()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('phone_verified_at'),
+                Forms\Components\DateTimePicker::make('phone_verified_at')
+                    ->disabled(),
                 Forms\Components\TextInput::make('otp_code')
-                    ->numeric(),
+                    ->numeric()
+                    ->disabled(),
                 Forms\Components\Select::make('status')
                     ->options(UserStatus::class)
                     ->required(),
@@ -47,6 +53,10 @@ class UserResource extends Resource
                     ->options(UserGender::class)
                     ->required(),
                 Forms\Components\DatePicker::make('date_of_birth'),
+                Forms\Components\TextInput::make('referral_code')
+                    ->disabled(),
+                Forms\Components\TextInput::make('fcm_token')
+                    ->disabled(),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->dehydrateStateUsing(fn($state) => Hash::make($state))
@@ -56,18 +66,27 @@ class UserResource extends Resource
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('avatar')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->toggleable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('gender')
-                    ->searchable(),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
                     ->sortable(),
@@ -75,8 +94,16 @@ class UserResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('status')
+                    ->options(UserStatus::class),
+                Tables\Filters\SelectFilter::make('gender')
+                    ->options(UserGender::class),
                 TableHelper::filterCreatedAt(),
             ])
             ->actions([
@@ -112,13 +139,14 @@ class UserResource extends Resource
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['name', 'phone'];
+        return ['name', 'phone', 'email'];
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
         return [
             'Name' => $record->name,
+            'Email' => $record->email,
             'Phone' => $record->phone,
         ];
     }
