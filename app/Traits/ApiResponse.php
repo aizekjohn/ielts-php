@@ -9,7 +9,7 @@ trait ApiResponse
 {
     public function response(
         int $httpCode = null,
-        array $data = [],
+        mixed $data = [],
         string $message = '',
         array $errors = [],
         int $code = 0,

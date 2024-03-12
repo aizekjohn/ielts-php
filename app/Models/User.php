@@ -34,8 +34,19 @@ class User extends Authenticatable implements FilamentUser
         'date_of_birth',
         'avatar',
         'referral_code',
+        'fcm_token',
         'password',
     ];
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function (User $user) {
+            $user->status = UserStatus::ACTIVE;
+            $user->password = bcrypt('password');
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.

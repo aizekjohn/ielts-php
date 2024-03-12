@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
     Route::post('google', [AuthController::class, 'google'])->name('auth.google');
+    Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+});
+
+Route::prefix('profile')->middleware(['auth:user'])->group(function () {
+    Route::get('me', [UserController::class, 'me'])->name('profile.name');
 });

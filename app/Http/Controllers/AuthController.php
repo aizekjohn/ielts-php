@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRegisterRequest;
 use App\Services\AuthService;
 use App\Traits\ApiResponse;
 use Exception;
@@ -29,6 +30,17 @@ class AuthController extends Controller
 
         return $this->response(
             data: $this->service->checkGoogle($request->token, $request->header('Fcm-Token'))
+        );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function register(UserRegisterRequest $request)
+    {
+        return $this->response(
+            data: $this->service->register($request->validated(), $request->header('Fcm-Token')),
+            message: "You have successfully registered"
         );
     }
 }
