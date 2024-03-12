@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Traits\ApiResponse;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\QueryException;
@@ -18,6 +19,8 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
+    use ApiResponse;
+
     /**
      * The list of the inputs that are never flashed to the session on validation exceptions.
      *
@@ -48,33 +51,38 @@ class Handler extends ExceptionHandler
             }
 
             if ($e instanceof RouteNotFoundException) {
-                return response()->json([
-                    'message' => "Invalid API endpoint, make sure you are sending `Accept` header with `application/json` value"
-                ], Response::HTTP_NOT_FOUND);
+                return $this->response(
+                    httpCode: Response::HTTP_NOT_FOUND,
+                    message: 'Invalid API endpoint, make sure you are sending `Accept` header with `application/json` value'
+                );
             }
 
             if ($e instanceof ThrottleRequestsException) {
-                return response()->json([
-                    'message' => 'Too many attempts, please, try again later'
-                ], Response::HTTP_TOO_MANY_REQUESTS);
+                return $this->response(
+                    httpCode: Response::HTTP_TOO_MANY_REQUESTS,
+                    message: 'Too many attempts, please, try again later'
+                );
             }
 
             if ($e instanceof NotFoundHttpException) {
-                return response()->json([
-                    'message' => 'No record found for your request',
-                ], Response::HTTP_NOT_FOUND);
+                return $this->response(
+                    httpCode: Response::HTTP_NOT_FOUND,
+                    message: 'No record found for your request'
+                );
             }
 
             if ($e instanceof QueryException) {
-                return response()->json([
-                    'message' => 'There was an error while connecting to database, our engineers will soon fix the problem',
-                ], Response::HTTP_INTERNAL_SERVER_ERROR);
+                return $this->response(
+                    httpCode: Response::HTTP_INTERNAL_SERVER_ERROR,
+                    message: 'There was an error while connecting to database, our engineers will soon fix the problem'
+                );
             }
 
-            return response()->json([
-                'message' => $e->getMessage(),
-                'code' => $e->getCode(),
-            ], Response::HTTP_BAD_REQUEST);
+            return $this->response(
+                httpCode: Response::HTTP_BAD_REQUEST,
+                message: $e->getMessage(),
+                code: $e->getCode(),
+            );
         });
     }
 
@@ -96,13 +104,18 @@ class Handler extends ExceptionHandler
             'errors' => $errors,
         ];
 
-        return response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        return $this->response(
+            httpCode: Response::HTTP_UNPROCESSABLE_ENTITY,
+            message: 'Validation error',
+            errors: $errors
+        );
     }
 
     protected function unauthenticated($request, AuthenticationException $exception): JsonResponse
     {
-        return response()->json([
-            'message' => 'Unauthenticated',
-        ], Response::HTTP_UNAUTHORIZED);
+        return $this->response(
+            httpCode: Response::HTTP_UNAUTHORIZED,
+            message: 'Unauthenticated'
+        );
     }
 }
