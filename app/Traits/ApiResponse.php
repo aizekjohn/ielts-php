@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 trait ApiResponse
 {
     public function response(
-        ?int $httpCode,
+        int $httpCode = null,
         array $data = [],
         string $message = '',
         array $errors = [],
