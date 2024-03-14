@@ -17,18 +17,17 @@ stages:
 
 before_script:
   - if [ "$CI_COMMIT_BRANCH" == "main" ]; then
-    export ENV_FILE=$PROD_ENV;
-    elif [ "$CI_COMMIT_BRANCH" == "main" ]; then
-    export ENV_FILE=$DEV_ENV;
+    cp $PROD_ENV .env
+    elif [ "$CI_COMMIT_BRANCH" == "dev" ]; then
+    cp $DEV_ENV .env
     fi
-  - cp "$ENV_FILE" .env
 
 build:
   stage: build
   script:
     - composer install
     - php artisan key:generate
-    - php artisan migrate
+    - php artisan migrate --force
     - vendor/bin/phpunit
 
 deploy_production:
