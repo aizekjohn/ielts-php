@@ -1,9 +1,8 @@
-# Set the base image for subsequent instructions
 FROM php:8.3
 
 # Update packages and install dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         git \
         curl \
         libmcrypt-dev \
@@ -14,11 +13,13 @@ RUN apt-get update && \
         libzip-dev \
         libicu-dev \
         zlib1g-dev \
+        postgresql-client \
+        libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install intl extension
-RUN docker-php-ext-configure intl && \
-    docker-php-ext-install intl pdo_mysql zip
+RUN docker-php-ext-configure intl \
+    && docker-php-ext-install intl pdo_pgsql zip
 
 # Install Composer
 RUN curl --silent --show-error "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin --filename=composer

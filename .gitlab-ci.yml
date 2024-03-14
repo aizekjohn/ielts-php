@@ -1,13 +1,13 @@
 default:
   image: registry.gitlab.com/moriarty5/ieltswizard:latest
   services:
-    - mysql:5.7
+    - postgres
 
 variables:
-  MYSQL_DATABASE: 'databasename'
-  MYSQL_ROOT_PASSWORD: secret
-  DB_HOST: mysql
-  DB_USERNAME: root
+  POSTGRES_DB: databasename
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST_AUTH_METHOD: trust
 
 stages:
   - build
@@ -18,7 +18,6 @@ stages:
 before_script:
   - if [ "$CI_COMMIT_BRANCH" == "main" ]; then
       cp "$PROD_ENV" $PWD/.env;
-    
     elif [ "$CI_COMMIT_BRANCH" == "dev" ]; then
       cp "$DEV_ENV" $PWD/.env;
     fi
@@ -28,7 +27,7 @@ build:
   script:
     - composer install
     - php artisan key:generate
-    - php artisan migrate --force
+    - php artisan migrate --database=deploy --force
     - vendor/bin/phpunit
 
 deploy_production:

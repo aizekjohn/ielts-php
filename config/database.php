@@ -78,6 +78,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'deploy' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL'),
+            'host' => 'postgres',
+            'port' => env('DB_PORT', '5432'),
+            'database' => 'databasename',
+            'username' => 'postgres',
+            'password' => 'postgres',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
