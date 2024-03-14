@@ -15,10 +15,17 @@ stages:
   - deploy
   - deploy_dev
 
+before_script:
+  - if [ "$CI_COMMIT_BRANCH" == "main" ]; then
+    export ENV_FILE=PROD_ENV;
+    else
+    export ENV_FILE=DEV_ENV;
+    fi
+  - cp "$ENV_FILE" .env
+
 build:
   stage: build
   script:
-    - cp .env.example .env
     - composer install
     - php artisan key:generate
 
