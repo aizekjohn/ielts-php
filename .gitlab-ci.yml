@@ -17,9 +17,10 @@ stages:
 
 before_script:
   - if [ "$CI_COMMIT_BRANCH" == "main" ]; then
-      cp "$PROD_ENV" $PWD/.env
+      cp "$PROD_ENV" $PWD/.env;
+    
     elif [ "$CI_COMMIT_BRANCH" == "dev" ]; then
-      cp "$DEV_ENV" $PWD/.env
+      cp "$DEV_ENV" $PWD/.env;
     fi
 
 build:
