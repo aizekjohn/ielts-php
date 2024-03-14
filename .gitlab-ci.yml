@@ -10,16 +10,21 @@ variables:
   DB_USERNAME: root
 
 stages:
+  - build
   - test
   - deploy
   - deploy_dev
 
-unit_test:
-  stage: test
+build:
+  stage: build
   script:
     - cp .env.example .env
     - composer install
     - php artisan key:generate
+
+unit_test:
+  stage: test
+  script:
     - php artisan migrate
     - vendor/bin/phpunit
 
@@ -47,7 +52,7 @@ deploy_development:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - ~/.composer/vendor/bin/envoy run deploy --commit="$CI_COMMIT_SHA"
+    - ~/.composer/vendor/bin/envoy run deploy_dev --commit="$CI_COMMIT_SHA"
   environment:
     name: development
     url: https://dev.ieltswizard.pro
