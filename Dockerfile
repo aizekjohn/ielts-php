@@ -1,9 +1,9 @@
-# Set the base image for subsequent instructions
-FROM php:8.3-alpine
+FROM php:8.3
 
 # Update packages and install dependencies
-RUN apk update && \
-    apk add --no-cache git curl libmcrypt-dev libjpeg-turbo-dev libpng-dev freetype-dev libbz2 libzip-dev
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev libzip-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install needed extensions
 RUN docker-php-ext-install pdo_mysql zip
