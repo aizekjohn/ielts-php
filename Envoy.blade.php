@@ -42,6 +42,8 @@
 @endtask
 
 @task('exec_commands')
+    echo 'Linking .env file'
+    ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
     echo "Starting deployment ({{ $release }})"
     cd {{ $new_release_dir }}
     composer install --prefer-dist --no-scripts --ignore-platform-reqs -q -o
@@ -53,6 +55,8 @@
 @endtask
 
 @task('exec_commands_dev')
+    echo 'Linking .env file'
+    ln -nfs {{ $dev_app_dir }}/.env {{ $new_dev_release_dir }}/.env
     echo "Starting deployment ({{ $release }})"
     cd {{ $new_dev_release_dir }}
     composer install --prefer-dist --no-scripts --ignore-platform-reqs -q -o
@@ -68,9 +72,6 @@
     rm -rf {{ $new_release_dir }}/storage
     ln -nfs {{ $app_dir }}/storage {{ $new_release_dir }}/storage
 
-    echo 'Linking .env file'
-    ln -nfs {{ $app_dir }}/.env {{ $new_release_dir }}/.env
-
     echo 'Linking current release'
     ln -nfs {{ $new_release_dir }} {{ $app_dir }}/current
 @endtask
@@ -79,9 +80,6 @@
     echo "Linking storage directory"
     rm -rf {{ $new_dev_release_dir }}/storage
     ln -nfs {{ $dev_app_dir }}/storage {{ $new_dev_release_dir }}/storage
-
-    echo 'Linking .env file'
-    ln -nfs {{ $dev_app_dir }}/.env {{ $new_dev_release_dir }}/.env
 
     echo 'Linking current release'
     ln -nfs {{ $new_dev_release_dir }} {{ $dev_app_dir }}/current
