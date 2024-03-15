@@ -44,7 +44,7 @@
 @task('exec_commands')
     echo "Starting deployment ({{ $release }})"
     cd {{ $new_release_dir }}
-    composer install --prefer-dist --no-scripts -q -o
+    composer install --prefer-dist --no-scripts --ignore-platform-reqs -q -o
     echo "Composer installed successfully"
     /usr/bin/php8.3 artisan migrate --force
     echo "Migrations have been executed successfully"
@@ -55,7 +55,7 @@
 @task('exec_commands_dev')
     echo "Starting deployment ({{ $release }})"
     cd {{ $new_dev_release_dir }}
-    composer install --prefer-dist --no-scripts -q -o
+    composer install --prefer-dist --no-scripts --ignore-platform-reqs -q -o
     echo "Composer installed successfully"
     /usr/bin/php8.3 artisan migrate --force
     echo "Migrations have been executed successfully"
