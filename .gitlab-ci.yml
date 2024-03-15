@@ -16,11 +16,7 @@ stages:
   - deploy_dev
 
 before_script:
-  - if [ "$CI_COMMIT_BRANCH" == "main" ]; then
-      cp "$PROD_ENV" $PWD/.env;
-    elif [ "$CI_COMMIT_BRANCH" == "dev" ]; then
-      cp "$DEV_ENV" $PWD/.env;
-    fi
+  - cp "$DEPLOY_DEV" $PWD/.env;
 
 build:
   stage: build
