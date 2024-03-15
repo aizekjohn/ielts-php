@@ -14,7 +14,7 @@ stages:
   - deploy
   - deploy_dev
 
-test:
+unit_test:
   stage: test
   script:
     - cp "$DEPLOY_ENV" $PWD/.env;
