@@ -82,7 +82,7 @@ return [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
             'host' => 'postgres',
-            'port' => env('DB_PORT', '5432'),
+            'port' => 5432,
             'database' => 'databasename',
             'username' => 'postgres',
             'password' => 'postgres',

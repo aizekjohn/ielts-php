@@ -10,17 +10,14 @@ variables:
   POSTGRES_HOST_AUTH_METHOD: trust
 
 stages:
-  - build
   - test
   - deploy
   - deploy_dev
 
-before_script:
-  - cp "$DEPLOY_ENV" $PWD/.env;
-
-build:
-  stage: build
+test:
+  stage: test
   script:
+    - cp "$DEPLOY_ENV" $PWD/.env;
     - composer install
     - php artisan key:generate
     - php artisan migrate --database=deploy --force
