@@ -59,7 +59,7 @@
     ln -nfs {{ $dev_app_dir }}/.env {{ $new_dev_release_dir }}/.env
     echo "Starting deployment ({{ $release }})"
     cd {{ $new_dev_release_dir }}
-    composer install --prefer-dist --no-scripts --ignore-platform-reqs -q -o
+    composer update --prefer-dist --no-scripts --ignore-platform-reqs -q -o
     echo "Composer installed successfully"
     /usr/bin/php8.3 artisan migrate --force
     echo "Migrations have been executed successfully"
