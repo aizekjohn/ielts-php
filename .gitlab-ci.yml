@@ -16,7 +16,7 @@ stages:
   - deploy_dev
 
 before_script:
-  - cp "$DEPLOY_DEV" $PWD/.env;
+  - cp "$DEPLOY_ENV" $PWD/.env;
 
 build:
   stage: build
