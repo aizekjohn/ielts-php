@@ -44,7 +44,9 @@ class User extends Authenticatable implements FilamentUser
 
         static::creating(function (User $user) {
             $user->status = UserStatus::ACTIVE;
-            $user->password = bcrypt('password');
+            if (is_null($user->password)) {
+                $user->password = bcrypt('password');
+            }
         });
     }
 
