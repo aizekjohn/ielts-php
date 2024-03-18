@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\File;
 use App\Models\SpeakingCategory;
+use App\Models\User;
 use App\Models\WritingCategory;
 use App\Models\WritingQuestion;
 use App\Observers\FileObserver;
 use App\Observers\SpeakingCategoryObserver;
+use App\Observers\UserObserver;
 use App\Observers\WritingCategoryObserver;
 use App\Observers\WritingQuestionObserver;
 use Illuminate\Auth\Events\Registered;
@@ -37,6 +39,7 @@ class EventServiceProvider extends ServiceProvider
         WritingCategory::observe(WritingCategoryObserver::class);
         WritingQuestion::observe(WritingQuestionObserver::class);
         File::observe(FileObserver::class);
+        User::observe(UserObserver::class);
     }
 
     /**
