@@ -29,8 +29,7 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('avatar')
-                    ->avatar()
-                    ->disabled(),
+                    ->avatar(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -105,15 +104,19 @@ class UserResource extends Resource
                 Tables\Filters\SelectFilter::make('gender')
                     ->options(UserGender::class),
                 TableHelper::filterCreatedAt(),
+                Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ]);
     }
