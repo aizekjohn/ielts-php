@@ -3,10 +3,14 @@
 namespace App\Services;
 
 use App\Models\User;
+use App\Traits\FileUpload;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class UserService
 {
+    use FileUpload;
+
     /**
      * @throws Exception
      */
@@ -42,5 +46,34 @@ class UserService
             $code .= $characters[rand(0, strlen($characters) - 1)];
         }
         return $code;
+    }
+
+    public function removeAvatar(User $user): void
+    {
+        $avatarPath = $user->avatar;
+
+        if (is_null($avatarPath)) {
+            return;
+        }
+
+        $user->update([
+            'avatar' => null,
+        ]);
+
+        Storage::delete($avatarPath);
+    }
+
+    public function editProfile(?array $attributes, User $user): void
+    {
+        if (array_key_exists('avatar', $attributes)) {
+            $avatar = $this->uploadSingleFile($attributes['avatar'], 'avatars');
+            $attributes['avatar'] = $avatar['path'];
+
+            if (!is_null($user->avatar)) {
+                Storage::delete($user->avatar);
+            }
+        }
+
+        $user->update($attributes);
     }
 }

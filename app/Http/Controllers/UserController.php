@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Services\UserService;
 use App\Traits\ApiResponse;
@@ -37,6 +38,24 @@ class UserController extends Controller
             data: [
                 'referral_code' => $code,
             ]
+        );
+    }
+
+    public function removeAvatar()
+    {
+        $this->service->removeAvatar(auth()->user());
+
+        return $this->response(
+            message: "Avatar has been removed successfully"
+        );
+    }
+
+    public function editProfile(EditProfileRequest $request)
+    {
+        $this->service->editProfile($request->validated(), auth()->user());
+
+        return $this->response(
+            message: "Profile has been updated successfully"
         );
     }
 }
