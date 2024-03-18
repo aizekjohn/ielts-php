@@ -32,5 +32,6 @@ Route::middleware(['auth:user'])->group(function () {
     Route::prefix('speaking')->group(function () {
         Route::get('categories', [SpeakingController::class, 'categories'])->name('speaking.categories');
         Route::get('categories/{speakingCategory}/questions', [SpeakingController::class, 'questions'])->name('speaking.questions');
+        Route::get('questions/{speakingQuestion}', [SpeakingController::class, 'singleQuestion'])->name('speaking.single-question');
     });
 });

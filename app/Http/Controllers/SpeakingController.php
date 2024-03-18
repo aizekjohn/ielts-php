@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SpeakingCategoryResource;
 use App\Http\Resources\SpeakingQuestionResource;
 use App\Models\SpeakingCategory;
+use App\Models\SpeakingQuestion;
 use App\Services\SpeakingService;
 use App\Traits\ApiResponse;
 use App\Traits\PaginationTrait;
@@ -43,6 +44,18 @@ class SpeakingController extends Controller
 
         return $this->response(
             data: $this->paginateResponse($questions, SpeakingQuestionResource::class)
+        );
+    }
+
+    public function singleQuestion(SpeakingQuestion $speakingQuestion)
+    {
+        $modalAnswers = $this->service->modalAnswers($speakingQuestion);
+
+        return $this->response(
+            data: [
+                'question' => SpeakingQuestionResource::make($speakingQuestion),
+                'answers' => $modalAnswers,
+            ]
         );
     }
 }

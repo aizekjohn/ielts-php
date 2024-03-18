@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\SpeakingCategory;
+use App\Models\SpeakingQuestion;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class SpeakingService
@@ -41,5 +42,17 @@ class SpeakingService
             perPage: $limit,
             page: $page
         );
+    }
+
+    public function modalAnswers(SpeakingQuestion $speakingQuestion): array
+    {
+        $answers = $speakingQuestion->answers()->orderBy('band')->orderBy('order')->get();
+
+        return $answers->groupBy('band')->map(function ($group) {
+            return [
+                'band' => $group->first()->band,
+                'answers' => $group->pluck('body')->toArray(),
+            ];
+        })->values()->toArray();
     }
 }
