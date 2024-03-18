@@ -23,4 +23,5 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('profile')->middleware(['auth:user'])->group(function () {
     Route::get('me', [UserController::class, 'me'])->name('profile.name');
+    Route::post('generate-ref-code', [UserController::class, 'generateRefCode'])->name('profile.generate-ref-code');
 });

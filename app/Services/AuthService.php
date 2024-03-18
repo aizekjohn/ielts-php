@@ -78,6 +78,12 @@ class AuthService
             $attributes['avatar'] = $avatar['path'];
         }
 
+        if (array_key_exists('referrer', $attributes)) {
+            $referrerCode = $attributes['referrer'];
+            $referrer = User::where('referral_code', $referrerCode)->first();
+            $attributes['referrer_id'] = $referrer?->id;
+        }
+
         $attributes['fcm_token'] = $fcmToken;
         $user = User::create($attributes);
         Cache::delete($user->email);

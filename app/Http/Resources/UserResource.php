@@ -27,6 +27,7 @@ class UserResource extends JsonResource
             'date_of_birth' => $this->date_of_birth->format('d.m.Y'),
             'avatar' => $this->avatar ? Storage::url($this->avatar) : null,
             'referral_code' => $this->referral_code,
+            'referrals_count' => $this->referrals()->count(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

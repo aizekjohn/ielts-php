@@ -25,6 +25,7 @@ class UserRegisterRequest extends FormRequest
             'gender' => 'required|in:' . implode(',', UserGender::all()),
             'date_of_birth' => 'nullable|date',
             'avatar' => 'nullable|file|mimetypes:image/jpeg,image/png',
+            'referrer' => 'nullable|string|size:5',
         ];
     }
 

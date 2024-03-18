@@ -7,6 +7,8 @@ namespace App\Models;
 use Filament\Panel;
 use App\Enums\UserGender;
 use App\Enums\UserStatus;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -35,6 +37,7 @@ class User extends Authenticatable implements FilamentUser
         'avatar',
         'referral_code',
         'fcm_token',
+        'referrer_id',
         'password',
     ];
 
@@ -76,5 +79,15 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         return in_array($this->phone, config('constants.admin_phones'));
+    }
+
+    public function referrer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'referrer_id', 'id');
+    }
+
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(User::class, 'referrer_id', 'id');
     }
 }
