@@ -29,7 +29,8 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('avatar')
-                    ->avatar(),
+                    ->avatar()
+                    ->directory('avatars'),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
