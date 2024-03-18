@@ -2,6 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\File;
+use App\Models\SpeakingCategory;
+use App\Models\WritingCategory;
+use App\Models\WritingQuestion;
+use App\Observers\FileObserver;
+use App\Observers\SpeakingCategoryObserver;
+use App\Observers\WritingCategoryObserver;
+use App\Observers\WritingQuestionObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -25,7 +33,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        SpeakingCategory::observe(SpeakingCategoryObserver::class);
+        WritingCategory::observe(WritingCategoryObserver::class);
+        WritingQuestion::observe(WritingQuestionObserver::class);
+        File::observe(FileObserver::class);
     }
 
     /**
