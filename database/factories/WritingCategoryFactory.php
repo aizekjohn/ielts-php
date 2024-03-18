@@ -15,23 +15,26 @@ class WritingCategoryFactory extends Factory
 
     public function definition(): array
     {
-        $directory = 'public/images/faker';
+        $directory = 'images/faker';
 
         if (!Storage::exists($directory)) {
             Storage::makeDirectory($directory);
         }
 
+        $name = $this->faker->word();
+
         $filePath = $this->faker->image(
-            dir: public_path('storage/images/faker'),
+            dir: storage_path('app/public/images/faker'),
             width: 500,
             height: 500,
             category: 'Writing',
             fullPath: false,
+            word: $name,
             format: 'jpg'
         );
 
         return [
-            'name' => $this->faker->word(),
+            'name' => $name,
             'image' => 'images/faker/' . $filePath,
             'part' => $this->faker->randomElement(WritingPart::all()),
             'created_at' => Carbon::now(),
