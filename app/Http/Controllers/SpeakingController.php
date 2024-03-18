@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SpeakingCategoryResource;
+use App\Http\Resources\SpeakingQuestionResource;
+use App\Models\SpeakingCategory;
 use App\Services\SpeakingService;
 use App\Traits\ApiResponse;
 use App\Traits\PaginationTrait;
@@ -29,6 +31,18 @@ class SpeakingController extends Controller
 
         return $this->response(
             data: $this->paginateResponse($categories, SpeakingCategoryResource::class)
+        );
+    }
+
+    public function questions(Request $request, SpeakingCategory $speakingCategory)
+    {
+        $page = $request->query('page', 1);
+        $limit = $request->query('limit', config('constants.per_page'));
+
+        $questions = $this->service->questions($page, $limit, $speakingCategory, $request->query('search'));
+
+        return $this->response(
+            data: $this->paginateResponse($questions, SpeakingQuestionResource::class)
         );
     }
 }

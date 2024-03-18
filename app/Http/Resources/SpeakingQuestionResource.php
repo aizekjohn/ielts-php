@@ -2,13 +2,12 @@
 
 namespace App\Http\Resources;
 
-use App\Models\SpeakingCategory;
+use App\Models\SpeakingQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
-/** @mixin SpeakingCategory */
-class SpeakingCategoryResource extends JsonResource
+/** @mixin SpeakingQuestion */
+class SpeakingQuestionResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,10 +18,8 @@ class SpeakingCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'image' => Storage::url($this->image),
-            'questions_count' => $this->questions->count(),
-            'part' => $this->part,
+            'body' => $this->body,
+            'answers_count' => $this->answers->count(),
             'order' => $this->order,
             'created_at' => $this->created_at,
         ];
