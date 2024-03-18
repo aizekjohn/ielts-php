@@ -85,7 +85,6 @@ class WritingQuestionResource extends Resource
                     Tables\Actions\ForceDeleteBulkAction::make(),
                 ]),
             ])
-            ->reorderable('order')
             ->defaultSort('order');
     }
 
