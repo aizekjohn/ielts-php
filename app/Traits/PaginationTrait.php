@@ -9,15 +9,15 @@ trait PaginationTrait
     public function paginateResponse($paginatedData, $resource)
     {
         /** @var $paginatedData LengthAwarePaginator */
-        return $resource::collection($paginatedData->items())
-            ->additional([
-                'meta' => [
-                    'limit' => $paginatedData->perPage(),
-                    'page' => $paginatedData->currentPage(),
-                    'total' => $paginatedData->total(),
-                    'current' => $paginatedData->count(),
-                    'lastPage' => $paginatedData->lastPage(),
-                ],
-            ]);
+        return [
+            'list' => $resource::collection($paginatedData->items()),
+            'meta' => [
+                'limit' => $paginatedData->perPage(),
+                'page' => $paginatedData->currentPage(),
+                'total' => $paginatedData->total(),
+                'current' => $paginatedData->count(),
+                'last_page' => $paginatedData->lastPage(),
+            ],
+        ];
     }
 }

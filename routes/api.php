@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SpeakingController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +21,15 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register'])->name('auth.register');
 });
 
-Route::prefix('profile')->middleware(['auth:user'])->group(function () {
-    Route::get('me', [UserController::class, 'me'])->name('profile.name');
-    Route::post('generate-ref-code', [UserController::class, 'generateRefCode'])->name('profile.generate-ref-code');
-    Route::post('/', [UserController::class, 'editProfile'])->name('profile.edit');
-    Route::delete('avatar', [UserController::class, 'removeAvatar'])->name('profile.remove-avatar');
+Route::middleware(['auth:user'])->group(function () {
+    Route::prefix('profile')->group(function () {
+        Route::get('me', [UserController::class, 'me'])->name('profile.me');
+        Route::post('generate-ref-code', [UserController::class, 'generateRefCode'])->name('profile.generate-ref-code');
+        Route::post('/', [UserController::class, 'editProfile'])->name('profile.edit');
+        Route::delete('avatar', [UserController::class, 'removeAvatar'])->name('profile.remove-avatar');
+    });
+
+    Route::prefix('speaking')->group(function () {
+        Route::get('categories', [SpeakingController::class, 'categories'])->name('speaking.categories');
+    });
 });
