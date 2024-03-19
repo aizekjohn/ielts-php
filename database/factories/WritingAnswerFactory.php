@@ -15,6 +15,7 @@ class WritingAnswerFactory extends Factory
     {
         return [
             'band' => $this->faker->randomElement(BandScore::all()),
+            'title' => $this->faker->randomElement(['Sample answer', 'Vocabulary']),
             'body' => $this->faker->realTextBetween(50, 100),
             'order' => $this->faker->randomNumber(2),
             'created_at' => Carbon::now(),
