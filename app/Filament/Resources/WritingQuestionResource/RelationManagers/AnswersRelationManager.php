@@ -33,10 +33,10 @@ class AnswersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-//                Tables\Columns\TextColumn::make('band'),
                 Tables\Columns\TextColumn::make('body')
                     ->label('Answer')
                     ->limit(50),
+                Tables\Columns\TextColumn::make('band'),
             ])
             ->filters([
                 //
