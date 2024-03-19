@@ -15,6 +15,7 @@ class WritingAnswer extends Model
     protected $fillable = [
         'question_id',
         'band',
+        'title',
         'body',
         'order',
     ];

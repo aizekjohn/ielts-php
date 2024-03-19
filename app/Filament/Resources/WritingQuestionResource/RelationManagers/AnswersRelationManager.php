@@ -17,6 +17,8 @@ class AnswersRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('title')
+                    ->required(),
                 Forms\Components\Select::make('band')
                     ->options(BandScore::class)
                     ->required(),
@@ -33,6 +35,7 @@ class AnswersRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
+                Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\TextColumn::make('body')
                     ->label('Answer')
                     ->limit(50),
@@ -55,6 +58,7 @@ class AnswersRelationManager extends RelationManager
             ])
             ->reorderable('order')
             ->defaultSort('order')
-            ->defaultGroup('band');
+            ->defaultGroup('band')
+            ->defaultPaginationPageOption(50);
     }
 }

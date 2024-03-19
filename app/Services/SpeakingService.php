@@ -51,7 +51,7 @@ class SpeakingService
         return $answers->groupBy('band')->map(function ($group) {
             return [
                 'band' => $group->first()->band,
-                'answers' => $group->pluck('body')->toArray(),
+                'answers' => $group->select(['title', 'body'])->toArray(),
             ];
         })->values()->toArray();
     }
