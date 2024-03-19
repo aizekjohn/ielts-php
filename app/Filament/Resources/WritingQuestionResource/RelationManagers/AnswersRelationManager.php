@@ -23,7 +23,7 @@ class AnswersRelationManager extends RelationManager
                     ->options(BandScore::class)
                     ->required(),
                 Forms\Components\Textarea::make('body')
-                    ->label('Modal answer')
+                    ->label('Model answer')
                     ->required()
                     ->rows(5)
                     ->columnSpanFull(),
