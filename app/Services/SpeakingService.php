@@ -21,7 +21,7 @@ class SpeakingService
         $query->orderBy('order');
         $query->latest();
 
-        return $query->with('questions')->paginate(
+        return $query->withCount('questions')->paginate(
             perPage: $limit,
             page: $page
         );
@@ -38,21 +38,9 @@ class SpeakingService
         $query->orderBy('order');
         $query->latest();
 
-        return $query->with('answers')->paginate(
+        return $query->withCount('answers')->paginate(
             perPage: $limit,
             page: $page
         );
-    }
-
-    public function modalAnswers(SpeakingQuestion $speakingQuestion): array
-    {
-        $answers = $speakingQuestion->answers()->orderBy('band')->orderBy('order')->get();
-
-        return $answers->groupBy('band')->map(function ($group) {
-            return [
-                'band' => $group->first()->band,
-                'answers' => $group->select(['title', 'body'])->toArray(),
-            ];
-        })->values()->toArray();
     }
 }

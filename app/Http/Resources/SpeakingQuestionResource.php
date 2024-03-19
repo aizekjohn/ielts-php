@@ -19,7 +19,7 @@ class SpeakingQuestionResource extends JsonResource
         return [
             'id' => $this->id,
             'body' => $this->body,
-            'answers_count' => $this->answers->count(),
+            'answers_count' => $this->answers_count,
             'order' => $this->order,
             'created_at' => $this->created_at,
         ];

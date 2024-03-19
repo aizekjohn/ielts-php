@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SingleSpeakingQuestionResource;
 use App\Http\Resources\SpeakingCategoryResource;
 use App\Http\Resources\SpeakingQuestionResource;
 use App\Models\SpeakingCategory;
@@ -49,13 +50,10 @@ class SpeakingController extends Controller
 
     public function singleQuestion(SpeakingQuestion $speakingQuestion)
     {
-        $modalAnswers = $this->service->modalAnswers($speakingQuestion);
+        $speakingQuestion->load('answers');
 
         return $this->response(
-            data: [
-                'question' => SpeakingQuestionResource::make($speakingQuestion),
-                'answers' => $modalAnswers,
-            ]
+            data: SingleSpeakingQuestionResource::make($speakingQuestion)
         );
     }
 }

@@ -21,7 +21,7 @@ class SpeakingCategoryResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'image' => Storage::url($this->image),
-            'questions_count' => $this->questions->count(),
+            'questions_count' => $this->questions_count,
             'part' => $this->part,
             'order' => $this->order,
             'created_at' => $this->created_at,
