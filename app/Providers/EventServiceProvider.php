@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Models\AppRelease;
 use App\Models\File;
+use App\Models\News;
 use App\Models\SpeakingCategory;
 use App\Models\User;
 use App\Models\WritingCategory;
 use App\Models\WritingQuestion;
 use App\Observers\AppReleaseObserver;
 use App\Observers\FileObserver;
+use App\Observers\NewsObserver;
 use App\Observers\SpeakingCategoryObserver;
 use App\Observers\UserObserver;
 use App\Observers\WritingCategoryObserver;
@@ -43,6 +45,7 @@ class EventServiceProvider extends ServiceProvider
         AppRelease::observe(AppReleaseObserver::class);
         File::observe(FileObserver::class);
         User::observe(UserObserver::class);
+        News::observe(NewsObserver::class);
     }
 
     /**
