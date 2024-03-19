@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SpeakingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WritingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,5 +34,11 @@ Route::middleware(['auth:user'])->group(function () {
         Route::get('categories', [SpeakingController::class, 'categories'])->name('speaking.categories');
         Route::get('categories/{speakingCategory}/questions', [SpeakingController::class, 'questions'])->name('speaking.questions');
         Route::get('questions/{speakingQuestion}', [SpeakingController::class, 'singleQuestion'])->name('speaking.single-question');
+    });
+
+    Route::prefix('writing')->group(function () {
+        Route::get('categories', [WritingController::class, 'categories'])->name('writing.categories');
+        Route::get('categories/{writingCategory}/questions', [WritingController::class, 'questions'])->name('writing.questions');
+        Route::get('questions/{writingQuestion}', [WritingController::class, 'singleQuestion'])->name('writing.single-question');
     });
 });
