@@ -31,7 +31,7 @@ class NewsResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('content')
+                Forms\Components\MarkdownEditor::make('content')
                     ->required()
                     ->columnSpanFull()
                     ->fileAttachmentsDisk('public')
