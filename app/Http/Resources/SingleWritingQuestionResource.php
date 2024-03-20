@@ -30,10 +30,10 @@ class SingleWritingQuestionResource extends JsonResource
 
     private function normalizeModelAnswers(?Collection $answers): array
     {
-        return $answers->groupBy('band')->map(function ($group) {
+        return $answers->sortBy('band')->groupBy('band')->map(function ($group) {
             return [
                 'band' => $group->first()->band,
-                'answers' => $group->select(['title', 'body'])->toArray(),
+                'answers' => $group->sortBy('order')->select(['title', 'body'])->toArray(),
             ];
         })->values()->toArray();
     }
