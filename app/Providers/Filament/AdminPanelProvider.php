@@ -56,8 +56,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationGroups([
                 NavigationGroup::make()
+                    ->label('Management')
+                    ->collapsible(false),
+                NavigationGroup::make()
+                    ->label('Content')
+                    ->collapsible(false),
+                NavigationGroup::make()
                     ->label('News & Notifications')
-                    ->icon('heroicon-o-newspaper')
                     ->collapsible(false),
             ]);
     }

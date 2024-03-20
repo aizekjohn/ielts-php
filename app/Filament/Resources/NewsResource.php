@@ -20,6 +20,8 @@ class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationGroup = 'News & Notifications';
@@ -71,7 +73,7 @@ class NewsResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

@@ -23,7 +23,9 @@ class WritingCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-queue-list';
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $navigationGroup = 'Content';
 
     public static function form(Form $form): Form
     {
