@@ -41,4 +41,24 @@ class NewsController extends Controller
             data: SingleNewsResource::make($news)
         );
     }
+
+    public function unread()
+    {
+        $unreadCount = $this->service->unreadCount(auth()->id());
+
+        return $this->response(
+            data: [
+                'unread_count' => $unreadCount,
+            ]
+        );
+    }
+
+    public function markAllRead()
+    {
+        $this->service->markAllAsRead(auth()->user());
+
+        return $this->response(
+            message: 'All news are marked as "read"'
+        );
+    }
 }

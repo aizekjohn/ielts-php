@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\News;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewsService
@@ -26,5 +27,21 @@ class NewsService
         if (!$isRead) {
             $news->users()->attach($userId);
         }
+    }
+
+    public function unreadCount(int $userId): int
+    {
+        return News::whereDoesntHave('users', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->count();
+    }
+
+    public function markAllAsRead(User $user): void
+    {
+        $unreadNews = News::whereDoesntHave('users', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->pluck('id');
+
+        $user->news()->attach($unreadNews);
     }
 }

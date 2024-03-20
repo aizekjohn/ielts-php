@@ -44,7 +44,9 @@ Route::middleware(['auth:user'])->group(function () {
     });
 
     Route::prefix('news')->group(function () {
-       Route::get('', [NewsController::class, 'list'])->name('news.list');
+        Route::get('', [NewsController::class, 'list'])->name('news.list');
+        Route::get('unread', [NewsController::class, 'unread'])->name('news.unread');
+        Route::post('mark-all-read', [NewsController::class, 'markAllRead'])->name('news.mark-all-read');
         Route::get('{news}', [NewsController::class, 'single'])->name('news.single');
     });
 });

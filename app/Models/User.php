@@ -8,6 +8,7 @@ use Filament\Panel;
 use App\Enums\UserGender;
 use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
@@ -89,5 +90,10 @@ class User extends Authenticatable implements FilamentUser
     public function referrals(): HasMany
     {
         return $this->hasMany(User::class, 'referrer_id', 'id');
+    }
+
+    public function news(): BelongsToMany
+    {
+        return $this->belongsToMany(News::class, 'news_user', 'user_id', 'news_id')->withTimestamps();
     }
 }
