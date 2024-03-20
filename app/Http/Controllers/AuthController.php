@@ -29,7 +29,7 @@ class AuthController extends Controller
         ]);
 
         return $this->response(
-            data: $this->service->checkGoogle($request->token, $request->header('Fcm-Token'))
+            data: $this->service->checkGoogle($request->token, $request->header('Fcm-Token'), $request->header('Device-Platform'))
         );
     }
 
@@ -39,7 +39,7 @@ class AuthController extends Controller
     public function register(UserRegisterRequest $request)
     {
         return $this->response(
-            data: $this->service->register($request->validated(), $request->header('Fcm-Token')),
+            data: $this->service->register($request->validated(), $request->header('Fcm-Token'), $request->header('Device-Platform')),
             message: "You have successfully registered"
         );
     }

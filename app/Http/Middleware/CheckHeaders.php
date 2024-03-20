@@ -25,10 +25,11 @@ class CheckHeaders
             }
         }
 
-        // Updating fcm token in case it's changed on mobile side
-        if (auth()->user() && auth()->user()->fcm_token != $request->header('Fcm-Token')) {
+        // Updating fcm token and platform in case it's changed on mobile side
+        if (auth()->user() && (auth()->user()->fcm_token != $request->header('Fcm-Token') || auth()->user()->platform != $request->header('Device-Platform'))) {
             auth()->user()->update([
                 'fcm_token' => $request->header('Fcm-Token'),
+                'platform' => $request->header('Device-Platform'),
             ]);
         }
 

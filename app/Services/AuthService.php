@@ -18,10 +18,11 @@ class AuthService
      *
      * @param string $token
      * @param string|null $fcmToken
+     * @param string|null $platform
      * @return array
      * @throws Exception
      */
-    public function checkGoogle(string $token, ?string $fcmToken): array
+    public function checkGoogle(string $token, ?string $fcmToken, ?string $platform): array
     {
         $response = Http::get('https://www.googleapis.com/oauth2/v3/userinfo', [
             'access_token' => $token,
@@ -45,9 +46,10 @@ class AuthService
                 ];
             }
 
-            if ($user->fcm_token != $fcmToken) {
+            if ($user->fcm_token != $fcmToken || $user->platform != $platform) {
                 $user->update([
                     'fcm_token' => $fcmToken,
+                    'platform' => $platform,
                 ]);
             }
 
@@ -63,9 +65,13 @@ class AuthService
     }
 
     /**
+     * @param array $attributes
+     * @param string|null $fcmToken
+     * @param string|null $platform
+     * @return array
      * @throws Exception
      */
-    public function register(array $attributes, ?string $fcmToken): array
+    public function register(array $attributes, ?string $fcmToken, ?string $platform): array
     {
         $cachedData = Cache::get($attributes['email']);
 
@@ -85,6 +91,7 @@ class AuthService
         }
 
         $attributes['fcm_token'] = $fcmToken;
+        $attributes['platform'] = $platform;
         $user = User::create($attributes);
         Cache::delete($user->email);
 
