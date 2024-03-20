@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Enums\UserStatus;
+use App\Events\UserAuthorized;
+use App\Events\UserRegistered;
 use App\Models\User;
 use App\Traits\FileUpload;
 use Exception;
@@ -53,6 +55,8 @@ class AuthService
                 ]);
             }
 
+            event(new UserAuthorized($user));
+
             $token = $this->createUserToken($user, $fcmToken ?? $email);
 
             return [
@@ -94,6 +98,8 @@ class AuthService
         $attributes['platform'] = $platform;
         $user = User::create($attributes);
         Cache::delete($user->email);
+
+        event(new UserRegistered($user));
 
         $token = $this->createUserToken($user, $user->fcm_token ?? $user->email);
 
