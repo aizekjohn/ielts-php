@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SpeakingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WritingController;
@@ -40,5 +41,10 @@ Route::middleware(['auth:user'])->group(function () {
         Route::get('categories', [WritingController::class, 'categories'])->name('writing.categories');
         Route::get('categories/{writingCategory}/questions', [WritingController::class, 'questions'])->name('writing.questions');
         Route::get('questions/{writingQuestion}', [WritingController::class, 'singleQuestion'])->name('writing.single-question');
+    });
+
+    Route::prefix('news')->group(function () {
+       Route::get('', [NewsController::class, 'list'])->name('news.list');
+        Route::get('{news}', [NewsController::class, 'single'])->name('news.single');
     });
 });
