@@ -97,4 +97,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->belongsToMany(News::class, 'news_user', 'user_id', 'news_id')->withTimestamps();
     }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'user_id', 'id');
+    }
 }
