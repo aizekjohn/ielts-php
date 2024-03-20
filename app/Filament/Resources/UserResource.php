@@ -59,6 +59,8 @@ class UserResource extends Resource
                 Forms\Components\DatePicker::make('date_of_birth'),
                 Forms\Components\TextInput::make('referral_code')
                     ->disabled(),
+                Forms\Components\TextInput::make('platform')
+                    ->disabled(),
                 Forms\Components\TextInput::make('fcm_token')
                     ->disabled(),
                 Forms\Components\TextInput::make('password')
