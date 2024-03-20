@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SpeakingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WritingController;
@@ -49,5 +50,10 @@ Route::middleware(['auth:user'])->group(function () {
         Route::get('unread', [NewsController::class, 'unread'])->name('news.unread');
         Route::post('mark-all-read', [NewsController::class, 'markAllRead'])->name('news.mark-all-read');
         Route::get('{news}', [NewsController::class, 'single'])->name('news.single');
+    });
+
+    Route::prefix('notifications')->group(function () {
+        Route::get('', [NotificationController::class, 'list'])->name('notification.list');
+        Route::get('unread', [NotificationController::class, 'unread'])->name('notification.unread');
     });
 });
