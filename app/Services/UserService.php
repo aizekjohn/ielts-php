@@ -76,4 +76,9 @@ class UserService
 
         $user->update($attributes);
     }
+
+    public function revokeTokens(User $user): void
+    {
+        $user->tokens()->delete();
+    }
 }

@@ -29,6 +29,7 @@ Route::middleware(['auth:user'])->group(function () {
         Route::post('generate-ref-code', [UserController::class, 'generateRefCode'])->name('profile.generate-ref-code');
         Route::post('/', [UserController::class, 'editProfile'])->name('profile.edit');
         Route::delete('avatar', [UserController::class, 'removeAvatar'])->name('profile.remove-avatar');
+        Route::post('logout', [UserController::class, 'logout'])->name('profile.logout');
     });
 
     Route::prefix('speaking')->group(function () {

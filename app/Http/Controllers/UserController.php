@@ -58,4 +58,13 @@ class UserController extends Controller
             message: "Profile has been updated successfully"
         );
     }
+
+    public function logout()
+    {
+        $this->service->revokeTokens(auth()->user());
+
+        return $this->response(
+            message: "See you later..."
+        );
+    }
 }
