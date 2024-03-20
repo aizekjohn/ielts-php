@@ -40,7 +40,6 @@ class NotificationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('body')
                     ->label('Message')
-//                    ->limit(100)
                     ->wrap(),
                 Tables\Columns\TextColumn::make('user.email')
                     ->icon('heroicon-m-envelope')
