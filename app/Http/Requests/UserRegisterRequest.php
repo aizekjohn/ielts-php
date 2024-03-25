@@ -40,7 +40,7 @@ class UserRegisterRequest extends FormRequest
     {
         $phone = str_replace(' ', '', $phone);
 
-        if (!str_starts_with($phone, '+')) {
+        if (!empty($phone) && !str_starts_with($phone, '+')) {
             $phone = '+' . $phone;
         }
 

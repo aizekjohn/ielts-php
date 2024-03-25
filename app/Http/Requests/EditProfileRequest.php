@@ -5,6 +5,9 @@ namespace App\Http\Requests;
 use App\Enums\UserGender;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property mixed $phone
+ */
 class EditProfileRequest extends FormRequest
 {
     /**
@@ -21,5 +24,23 @@ class EditProfileRequest extends FormRequest
             'date_of_birth' => 'nullable|date',
             'avatar' => 'nullable|file|mimetypes:image/jpeg,image/png',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'phone' => $this->formatPhoneNumber($this->phone),
+        ]);
+    }
+
+    protected function formatPhoneNumber($phone): string
+    {
+        $phone = str_replace(' ', '', $phone);
+
+        if (!empty($phone) && !str_starts_with($phone, '+')) {
+            $phone = '+' . $phone;
+        }
+
+        return $phone;
     }
 }

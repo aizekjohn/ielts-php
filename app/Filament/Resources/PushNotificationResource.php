@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PushNotificationResource\Pages;
-use App\Filament\Resources\PushNotificationResource\RelationManagers;
 use App\Helpers\TableHelper;
 use App\Models\PushNotification;
 use Filament\Forms;
