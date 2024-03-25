@@ -13,6 +13,7 @@ use App\Models\WritingCategory;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use App\Filament\Resources\WritingCategoryResource\Pages;
+use App\Filament\Resources\WritingCategoryResource\RelationManagers;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,7 +34,8 @@ class WritingCategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->imageEditor()
@@ -50,7 +52,8 @@ class WritingCategoryResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('part')
                     ->options(WritingPart::class)
-                    ->required(),
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -99,6 +102,13 @@ class WritingCategoryResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\QuestionsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

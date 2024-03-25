@@ -48,7 +48,9 @@ class WritingQuestionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('category.name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->url(fn (WritingQuestion $writingQuestion): string => route('filament.admin.resources.writing-categories.edit', $writingQuestion->writing_category_id))
+                    ->openUrlInNewTab(),
                 Tables\Columns\TextColumn::make('body')
                     ->label('Question')
                     ->limit(50)

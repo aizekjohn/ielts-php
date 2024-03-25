@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Helpers\TableHelper;
-use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -12,6 +11,7 @@ use App\Enums\SpeakingPart;
 use App\Models\SpeakingCategory;
 use Filament\Resources\Resource;
 use App\Filament\Resources\SpeakingCategoryResource\Pages;
+use App\Filament\Resources\SpeakingCategoryResource\RelationManagers;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -33,7 +33,8 @@ class SpeakingCategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->imageEditor()
@@ -50,7 +51,8 @@ class SpeakingCategoryResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('part')
                     ->options(SpeakingPart::class)
-                    ->required(),
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -102,6 +104,13 @@ class SpeakingCategoryResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\QuestionsRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

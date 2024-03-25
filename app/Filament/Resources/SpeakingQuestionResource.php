@@ -48,7 +48,9 @@ class SpeakingQuestionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('category.name')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->url(fn (SpeakingQuestion $speakingQuestion): string => route('filament.admin.resources.speaking-categories.edit', $speakingQuestion->speaking_category_id))
+                    ->openUrlInNewTab(),
                 Tables\Columns\TextColumn::make('body')
                     ->label('Question')
                     ->limit(50)
