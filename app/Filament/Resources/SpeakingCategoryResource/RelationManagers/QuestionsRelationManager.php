@@ -19,10 +19,6 @@ class QuestionsRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
-                    ->required()
-                    ->maxLength(255)
-                    ->columnSpanFull(),
                 Forms\Components\Textarea::make('body')
                     ->required()
                     ->columnSpanFull(),
